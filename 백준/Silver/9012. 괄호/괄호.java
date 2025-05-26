@@ -1,33 +1,41 @@
-import java.util.Scanner;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.Stack;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int t = scanner.nextInt(); // 테스트 케이스의 수
-        
-        for (int i = 0; i < t; i++) {
-            String target = scanner.next();
-            System.out.println(parenthesisVerification(target) ? "YES" : "NO");
-        }
-        
-        scanner.close();
-    }
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new java.io.InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new java.io.OutputStreamWriter(System.out));
 
-    public static boolean parenthesisVerification(String s) {
-        Stack<Character> stack = new Stack<>();
-        
-        for (char c : s.toCharArray()) {
-            if (c == '(') {
-                stack.push(c);
-            } else if (c == ')') {
-                if (stack.isEmpty()) {
-                    return false;
+        int n = Integer.parseInt(br.readLine());
+        for (int i = 0; i < n; i++) {
+            String line = br.readLine();
+
+            Stack<Character> stack = new Stack<>();
+            boolean          isVPS = true;
+
+            for (char c : line.toCharArray()) {
+                if (c == '(') {
+                    stack.push(c);
+                } else if (c == ')') {
+                    // ) 를 받았을 때 stack이 비어있을 경우
+                    if (stack.isEmpty()) {
+                        // stack 이 비어있지 않 경우
+                        isVPS = false;
+                        break;
+                    } else {
+                        stack.pop();
+                    }
                 }
-                stack.pop();
             }
+            if (!stack.isEmpty()) {
+                isVPS = false;
+            }
+            bw.write(isVPS ? "YES" : "NO");
+            bw.newLine();
         }
-        
-        return stack.isEmpty();
+        bw.flush();
     }
 }
