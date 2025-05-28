@@ -1,50 +1,50 @@
 
-import java.io.*;
-import java.util.*;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        BufferedReader br = new BufferedReader(new java.io.InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new java.io.OutputStreamWriter(System.out));
 
-        StringTokenizer           st      = new StringTokenizer(br.readLine());
-        int                       N       = Integer.parseInt(st.nextToken());
-        int                       M       = Integer.parseInt(st.nextToken());
-        Map<String, List<String>> nameMap = new HashMap<>();
+        StringTokenizer firstLine = new StringTokenizer(br.readLine());
+        int             n         = Integer.parseInt(firstLine.nextToken());
+        int             m         = Integer.parseInt(firstLine.nextToken());
 
-        for (int i = 0; i < N; i++) {
-            st = new StringTokenizer(br.readLine());
-            st.nextToken(); // Skip first token
-            String name      = st.nextToken();
-            String resultKey = st.nextToken() + st.nextToken() + st.nextToken();
-            nameMap.putIfAbsent(resultKey, new ArrayList<>());
-            nameMap.get(resultKey)
-                    .add(name);
-        }
+        Map<String, String> map = new HashMap<>();
 
-        for (int i = 0; i < M; i++) {
-            st = new StringTokenizer(br.readLine());
-            StringBuilder sb = new StringBuilder();
-            while (st.hasMoreTokens()) {
-                sb.append(st.nextToken());
-            }
-            String       key          = sb.toString();
-            List<String> matchedNames = nameMap.getOrDefault(key, Collections.emptyList());
+        for (int i = 0; i < n; i++) {
+            StringTokenizer nLine = new StringTokenizer(br.readLine());
+            nLine.nextToken();
+            String songName  = nLine.nextToken();
+            String pitchName = String.join("", nLine.nextToken(), nLine.nextToken(), nLine.nextToken());
 
-            if (matchedNames.size() == 1) {
-                bw.write(matchedNames.get(0));
-                bw.newLine();
-            } else if (matchedNames.size() > 1) {
-                bw.write("?");
-                bw.newLine();
+            if (map.containsKey(pitchName)) {
+                map.put(pitchName, "?");
             } else {
-                bw.write("!");
-                bw.newLine();
+                map.put(pitchName, songName);
             }
         }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < m; i++) {
+            StringTokenizer mLine      = new StringTokenizer(br.readLine());
+            String          resultName = String.join("", mLine.nextToken(), mLine.nextToken(), mLine.nextToken());
 
+            if (!map.containsKey(resultName)) {
+                sb.append("!\n");
+            } else {
+                sb.append(map.get(resultName))
+                        .append("\n");
+            }
+
+
+        }
+        bw.write(sb.toString());
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
