@@ -1,29 +1,34 @@
 
 
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader  br  = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter  bw  = new BufferedWriter(new OutputStreamWriter(System.out));
-        StringTokenizer st;
-        Set<String>     set = new HashSet<>();
+        BufferedReader br = new BufferedReader(new java.io.InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new java.io.OutputStreamWriter(System.out));
+        StringBuilder  sb = new StringBuilder();
 
         int n = Integer.parseInt(br.readLine());
-        while (n-- > 0) {
-            String line = br.readLine();
-            set.add(line);
 
-            String line_reverse = new StringBuilder(line).reverse()
+        Set<String> set = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            String word = br.readLine();
+            set.add(word);
+
+            String reverseWord = new StringBuilder(word).reverse()
                     .toString();
-            if (set.contains(line_reverse)) {
-                System.out.println(line_reverse.length() + " " + line_reverse.charAt(line_reverse.length() / 2));
+
+            if (set.contains(reverseWord)) {
+                bw.write(reverseWord.length() + " " + reverseWord.charAt(reverseWord.length() / 2));
                 break;
             }
+
         }
+
+        bw.flush();
     }
 }
