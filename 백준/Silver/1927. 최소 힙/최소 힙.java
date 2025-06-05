@@ -1,28 +1,37 @@
-import java.io.*;
+
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.PriorityQueue;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader         br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter         bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        BufferedReader br = new BufferedReader(new java.io.InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new java.io.OutputStreamWriter(System.out));
+
         PriorityQueue<Integer> pq = new PriorityQueue<>();
 
-        int N = Integer.parseInt(br.readLine());
-        for (int i = 0; i < N; i++) {
-            int X = Integer.parseInt(br.readLine());
-            if (X == 0) {
-                Integer poll = pq.poll();
-                if (poll == null) {
-                    bw.write(0 + "\n");
-                    continue;
+        int n = Integer.parseInt(br.readLine());
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            int num = Integer.parseInt(br.readLine());
+            // x가 0이라면
+            if (num == 0) {
+                // 배열이 비어있는 경우
+                if (pq.isEmpty()) {
+                    sb.append(0);
+                } else {
+                    sb.append(pq.poll());
                 }
-                bw.write(poll + "\n");
+                sb.append("\n");
             } else {
-                pq.offer(X);
+                pq.offer(num);
             }
         }
+        bw.write(sb.toString());
         bw.flush();
-        bw.close();
-        br.close();
+
     }
 }
