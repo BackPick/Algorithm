@@ -1,38 +1,36 @@
 
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 public class Main {
-
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        // 2
-        int                  testCase = Integer.parseInt(br.readLine());
-        Map<String, Integer> clothDB  = new HashMap<>();
+        BufferedReader br = new BufferedReader(new java.io.InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new java.io.OutputStreamWriter(System.out));
 
+        int testCase = Integer.parseInt(br.readLine());
         for (int i = 0; i < testCase; i++) {
-
-            // 3
-            int n = Integer.parseInt(br.readLine());
+            int                  n   = Integer.parseInt(br.readLine());
+            Map<String, Integer> map = new HashMap<>();
             for (int j = 0; j < n; j++) {
-                StringTokenizer st        = new StringTokenizer(br.readLine());
-                String          cloth     = st.nextToken();
-                String          clothType = st.nextToken();
-                clothDB.put(clothType, clothDB.getOrDefault(clothType, 0) + 1);
+                StringTokenizer st       = new StringTokenizer(br.readLine());
+                String          cloth    = st.nextToken();
+                String          wearType = st.nextToken();
+                map.put(wearType, map.getOrDefault(wearType, 0) + 1);
             }
+
             int result = 1;
-            for (Integer value : clothDB.values()) {
+            for (Integer value : map.values()) {
                 result *= (value + 1);
             }
-            System.out.println(result - 1);
-
-
-            clothDB.clear();
+            bw.write(String.valueOf(result - 1));
+            bw.newLine();
         }
 
+        bw.flush();
     }
 }
