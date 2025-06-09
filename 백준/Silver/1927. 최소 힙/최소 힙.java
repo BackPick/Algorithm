@@ -10,28 +10,27 @@ public class Main {
         BufferedReader br = new BufferedReader(new java.io.InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new java.io.OutputStreamWriter(System.out));
 
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-
         int n = Integer.parseInt(br.readLine());
 
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
+
         StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < n; i++) {
-            int num = Integer.parseInt(br.readLine());
-            // x가 0이라면
-            if (num == 0) {
-                // 배열이 비어있는 경우
-                if (pq.isEmpty()) {
+            int x = Integer.parseInt(br.readLine());
+
+            if (x == 0) {
+                if (priorityQueue.isEmpty()) {
                     sb.append(0);
                 } else {
-                    sb.append(pq.poll());
+                    sb.append(priorityQueue.poll());
                 }
                 sb.append("\n");
             } else {
-                pq.offer(num);
+                priorityQueue.offer(x);
             }
         }
         bw.write(sb.toString());
         bw.flush();
-
     }
 }
