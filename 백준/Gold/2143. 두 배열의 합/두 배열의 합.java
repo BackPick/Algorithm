@@ -1,5 +1,4 @@
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -10,45 +9,45 @@ public class Main {
         BufferedReader br = new BufferedReader(new java.io.InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new java.io.OutputStreamWriter(System.out));
 
-        int t = Integer.parseInt(br.readLine());
+        long t = Long.parseLong(br.readLine());
 
-        int             n    = Integer.parseInt(br.readLine());
-        int[]           arrA = new int[n];
-        StringTokenizer stA  = new StringTokenizer(br.readLine());
+        int             n     = Integer.parseInt(br.readLine());
+        StringTokenizer nLine = new StringTokenizer(br.readLine());
+        int[]           arrN  = new int[n];
         for (int i = 0; i < n; i++) {
-            arrA[i] = Integer.parseInt(stA.nextToken());
+            arrN[i] = Integer.parseInt(nLine.nextToken());
         }
 
-        List<Long> sumA = new ArrayList<Long>();
+        List<Long> listN = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             long sum = 0;
             for (int j = i; j < n; j++) {
-                sum += arrA[j];
-                sumA.add(sum);
+                sum += arrN[j];
+                listN.add(sum);
             }
         }
-
-        int             m    = Integer.parseInt(br.readLine());
-        int[]           arrB = new int[m];
-        StringTokenizer stB  = new StringTokenizer(br.readLine());
+        int             m     = Integer.parseInt(br.readLine());
+        StringTokenizer mLine = new StringTokenizer(br.readLine());
+        int[]           arrM  = new int[m];
         for (int i = 0; i < m; i++) {
-            arrB[i] = Integer.parseInt(stB.nextToken());
+            arrM[i] = Integer.parseInt(mLine.nextToken());
         }
-        Map<Long, Integer> sumB = new HashMap<>();
+
+        Map<Long, Integer> mapM = new HashMap<>();
         for (int i = 0; i < m; i++) {
             long sum = 0;
             for (int j = i; j < m; j++) {
-                sum += arrB[j];
-                sumB.put(sum, sumB.getOrDefault(sum, 0) + 1);
+                sum += arrM[j];
+                mapM.put(sum, mapM.getOrDefault(sum, 0) + 1);
             }
         }
 
         long count = 0;
-        for (Long x : sumA) {
-            long target = t - x;
-            count += sumB.getOrDefault(target, 0);
+        for (Long x : listN) {
+            long sum = t - x;
+            count += mapM.getOrDefault(sum, 0);
         }
-        System.out.println(count);
-
+        bw.write(String.valueOf(count));
+        bw.flush();
     }
 }
