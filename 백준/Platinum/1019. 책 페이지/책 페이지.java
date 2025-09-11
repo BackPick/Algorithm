@@ -1,46 +1,31 @@
-import java.util.Scanner;
-
+import java.io.*;
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        long N = sc.nextLong();
-
-        long[] counts = new long[10];
-        long factor = 1;
-
-        while (N / factor > 0) {
-            long left = N / (factor * 10);
-            long cur = (N / factor) % 10;
-            long right = N % factor;
-
-            for (int d = 0; d < 10; d++) {
-                if (d == 0) {
-                    if (left == 0) continue;
-                    if (cur == 0) {
-                        counts[d] += (left - 1) * factor + (right + 1);
-                    } else {
-                        counts[d] += left * factor;
-                    }
-                } else {
-                    if (cur > d) {
-                        counts[d] += (left + 1) * factor;
-                    } else if (cur == d) {
-                        counts[d] += left * factor + (right + 1);
-                    } else {
-                        counts[d] += left * factor;
-                    }
-                }
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        long N = Long.parseLong(br.readLine().trim());
+        long[] cnt = new long[10];
+        long base = 1;
+        while (base <= N) {
+            long high = N / (base * 10);
+            long cur = (N / base) % 10;
+            long low = N % base;
+            if (high > 0) {
+                if (cur == 0) cnt[0] += (high - 1) * base + (low + 1);
+                else cnt[0] += (high - 1) * base + base;
             }
-            factor *= 10;
+            for (int d = 1; d <= 9; d++) {
+                if (cur > d) cnt[d] += (high + 1) * base;
+                else if (cur == d) cnt[d] += high * base + (low + 1);
+                else cnt[d] += high * base;
+            }
+            base *= 10;
         }
-
-        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 10; i++) {
-            sb.append(counts[i]);
-            if (i < 9) sb.append(" ");
+            if (i > 0) bw.write(" ");
+            bw.write(Long.toString(cnt[i]));
         }
-        System.out.println(sb);
-
-        sc.close();
+        bw.newLine();
+        bw.flush();
     }
 }
